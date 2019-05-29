@@ -375,3 +375,6 @@ html .clear-completed:active {
     bottom: 10px;
   }
 }
+.label:before{
+  color: red !important;
+}

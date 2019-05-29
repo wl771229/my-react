@@ -135,6 +135,32 @@ class App extends Component  {
     componentDidMount(){
       this.checkNumber()
     }
+    //全选以及反选
+    allTodo(){
+        let {todoList,checkNumber} = this.state;
+        if(checkNumber == 0){
+            todoList.forEach((item) =>{
+                item.isState = false
+            });
+        }else {
+            todoList.forEach((item) =>{
+                item.isState = true
+            });
+        }
+        this.checkNumber()
+    }
+    //清空所有项目
+    clearTodo(){
+        let {todoList} = this.state;
+        for (let len = todoList.length, i = len - 1; i >= 0; i--) {
+            if(todoList[i].isState ){
+                todoList.splice(i,1)
+
+            }
+        }
+        this.checkNumber()
+
+    }
     render() {
         let {addValue,editId,checkNumber} = this.state;
 
@@ -169,7 +195,7 @@ class App extends Component  {
                   {/* This section should be hidden by default and shown when there are todos */}
                 <section className="main">
                   <input id="toggle-all" className="toggle-all" type="checkbox" />
-                  <label >Mark all as complete</label>
+                  <label className={checkNumber ==0?'label':''} onClick={this.allTodo.bind(this)}>Mark all as complete</label>
                   <ul className="todo-list">
 
                       {todoContent}
@@ -193,7 +219,7 @@ class App extends Component  {
                     </li>
                   </ul>
                     {/*Hidden if no completed items are left ↓ */}
-                  <button className="clear-completed">Clear completed</button>
+                  <button className="clear-completed" onClick={this.clearTodo.bind(this)}>Clear completed</button>
                 </footer>
               </section>
               <footer className="info">
@@ -207,9 +233,7 @@ class App extends Component  {
 
             </div>
         );
-
     }
-
 }
 
 export default App;
